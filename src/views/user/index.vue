@@ -1,6 +1,5 @@
 <template>
   <BasicTable @register="registerTable">
-
     <template #tableTitle>
       <a-space :size="10">
         <a-button ghost type="primary" preIcon="ant-design:plus-circle-outlined" >新增</a-button>
@@ -30,21 +29,32 @@
       </template>
     </template>
   </BasicTable>
+  <BasicModal
+    v-bind="$attrs"
+    @register="registerModel"
+    title="Modal Title"
+  >
+    <div class="pt-3px pr-3px">
+      <BasicForm @register="registerForm" :model="model" />
+    </div>
+  </BasicModal>
 </template>
 <script lang="ts">
   import { defineComponent, ref } from 'vue';
-  import { BasicTable, TableAction, useTable } from '/@/components/Table';
-  import { getBasicColumns, getFormConfig } from './tableData';
+  import {BasicTable, TableAction, useTable} from '/@/components/Table';
+  import {BasicModal, useModal } from '/@/components/Modal';
+  import {getBasicColumns, getFormConfig, getModalFormColumns} from './tableData';
   import { Alert, Space } from 'ant-design-vue';
-
   import { userPage } from '/@/api/sys/user';
+  import {BasicForm, useForm} from "/@/components/Form";
 
   export default defineComponent({
-    components: { TableAction, BasicTable, AAlert: Alert, ASpace: Space },
+    components: {BasicForm, TableAction, BasicTable, BasicModal, AAlert: Alert, ASpace: Space },
     setup() {
       const checkedKeys = ref<Array<string | number>>([]);
+      const modelRef = ref({});
       const checkedKeysText = ref<string | number>();
-      const [registerTable, { getForm }] = useTable({
+      const [registerTable] = useTable({
         title: '',
         api: userPage,
         columns: getBasicColumns(),
@@ -56,7 +66,6 @@
         rowKey: 'id',
         rowSelection: {
           type: 'checkbox',
-          selectedRowKeys: checkedKeys,
           onSelect: onSelect,
           onSelectAll: onSelectAll,
         },
@@ -69,9 +78,22 @@
         },
       });
 
-      function getFormValues() {
-        console.log(getForm().getFieldsValue());
-      }
+      const [
+        registerForm,
+        {
+          // setFieldsValue,
+          // setProps
+        },
+      ] = useForm({
+        labelWidth: 120,
+        schemas: getModalFormColumns(),
+        showActionButtonGroup: false,
+        actionColOptions: {
+          span: 24,
+        },
+      });
+
+      const [registerModel, { openModal: openModalProxy }] = useModal();
 
       function onSelect(record, selected) {
         if (selected) {
@@ -82,7 +104,7 @@
         checkedKeysText.value = checkedKeys.value.length > 0 ?  checkedKeys.value.length : '';
       }
 
-      function onSelectAll(selected, selectedRows, changeRows) {
+      function onSelectAll(selected, _selectedRows, changeRows) {
         const changeIds = changeRows.map((item) => item.id);
         if (selected) {
           checkedKeys.value = [...checkedKeys.value, ...changeIds];
@@ -94,18 +116,21 @@
         checkedKeysText.value = checkedKeys.value.length > 0 ?  checkedKeys.value.length : '';
       }
 
-      function openUserDialogue(record: Recordable) {
-        alert(record);
+      function openUserDialogue(record: Recordable){
+        modelRef.value = record;
+        openModalProxy(true);
       }
 
       return {
         registerTable,
-        getFormValues,
+        registerModel,
+        registerForm,
         checkedKeys,
         checkedKeysText,
         onSelect,
         onSelectAll,
-        openUserDialogue,
+        model: modelRef,
+        openUserDialogue
       };
     },
   });

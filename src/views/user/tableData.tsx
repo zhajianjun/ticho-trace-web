@@ -1,5 +1,6 @@
-import { FormProps } from '/@/components/Table';
-import { BasicColumn } from '/@/components/Table/src/types/table';
+import {FormProps} from '/@/components/Table';
+import {FormSchema} from '/@/components/Form';
+import {BasicColumn} from '/@/components/Table/src/types/table';
 
 export function getBasicColumns(): BasicColumn[] {
   return [
@@ -52,6 +53,46 @@ export function getBasicColumns(): BasicColumn[] {
       dataIndex: 'remark',
     },
   ];
+}
+
+export function getModalFormColumns(): FormSchema[] {
+  return [
+    {
+      field: `username`,
+      label: `账户`,
+      component: 'Input',
+      colProps: {
+        span: 24,
+      },
+      componentProps: {
+        placeholder: '请输入账户',
+      },
+    },
+    {
+      field: `realname`,
+      label: `真实姓名`,
+      component: 'Input',
+      colProps: {
+        span: 24,
+      },
+    },
+    {
+      field: `email`,
+      label: `邮箱`,
+      component: 'Input',
+      colProps: {
+        span: 24,
+      },
+    },
+    {
+      field: `mobile`,
+      label: `手机号码`,
+      component: 'Input',
+      colProps: {
+        span: 24,
+      },
+    },
+  ]
 }
 
 export function getFormConfig(): Partial<FormProps> {
