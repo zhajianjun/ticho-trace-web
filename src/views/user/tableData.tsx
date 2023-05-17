@@ -1,8 +1,55 @@
-import {FormProps} from '/@/components/Table';
-import {FormSchema} from '/@/components/Form';
-import {BasicColumn} from '/@/components/Table/src/types/table';
+import { FormProps } from '/@/components/Table';
+import { FormSchema } from '/@/components/Form';
+import { BasicColumn } from '/@/components/Table/src/types/table';
 
-export function getBasicColumns(): BasicColumn[] {
+export function getSearchColumns(): Partial<FormProps> {
+  return {
+    labelWidth: 100,
+    schemas: [
+      {
+        field: `username`,
+        label: `账户`,
+        component: 'Input',
+        colProps: {
+          xl: 12,
+          xxl: 8,
+        },
+        componentProps: {
+          placeholder: '请输入账户',
+        },
+      },
+      {
+        field: `realname`,
+        label: `真实姓名`,
+        component: 'Input',
+        colProps: {
+          xl: 12,
+          xxl: 8,
+        },
+      },
+      {
+        field: `email`,
+        label: `邮箱`,
+        component: 'Input',
+        colProps: {
+          xl: 12,
+          xxl: 8,
+        },
+      },
+      {
+        field: `mobile`,
+        label: `手机号码`,
+        component: 'Input',
+        colProps: {
+          xl: 12,
+          xxl: 8,
+        },
+      },
+    ],
+  };
+}
+
+export function getTableColumns(): BasicColumn[] {
   return [
     {
       title: '账户',
@@ -92,52 +139,5 @@ export function getModalFormColumns(): FormSchema[] {
         span: 24,
       },
     },
-  ]
-}
-
-export function getFormConfig(): Partial<FormProps> {
-  return {
-    labelWidth: 100,
-    schemas: [
-      {
-        field: `username`,
-        label: `账户`,
-        component: 'Input',
-        colProps: {
-          xl: 12,
-          xxl: 8,
-        },
-        componentProps: {
-          placeholder: '请输入账户',
-        },
-      },
-      {
-        field: `realname`,
-        label: `真实姓名`,
-        component: 'Input',
-        colProps: {
-          xl: 12,
-          xxl: 8,
-        },
-      },
-      {
-        field: `email`,
-        label: `邮箱`,
-        component: 'Input',
-        colProps: {
-          xl: 12,
-          xxl: 8,
-        },
-      },
-      {
-        field: `mobile`,
-        label: `手机号码`,
-        component: 'Input',
-        colProps: {
-          xl: 12,
-          xxl: 8,
-        },
-      },
-    ],
-  };
+  ];
 }

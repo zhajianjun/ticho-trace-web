@@ -1,65 +1,85 @@
 <template>
-  <BasicTable @register="registerTable">
-    <template #tableTitle>
-      <a-space :size="10">
-        <a-button ghost type="primary" preIcon="ant-design:plus-circle-outlined" >新增</a-button>
-        <a-button ghost type="danger" preIcon="ant-design:delete-outlined">删除{{ checkedKeysText }}</a-button>
-      </a-space>
-    </template>
-    <template #bodyCell="{ column, record }">
-      <template v-if="column.key === 'action'">
-        <TableAction
-          stopButtonPropagation
-          :actions="[
+  <div>
+    <BasicTable @register="registerTable">
+      <template #tableTitle>
+        <a-space :size="10">
+          <a-button
+            ghost
+            type="primary"
+            preIcon="ant-design:plus-circle-outlined"
+            @click="openUserDialogue(true, null)"
+            >新增</a-button
+          >
+          <a-button ghost type="danger" preIcon="ant-design:delete-outlined"
+            >删除{{ checkedKeysText }}</a-button
+          >
+        </a-space>
+      </template>
+      <template #bodyCell="{ column, record }">
+        <template v-if="column.key === 'action'">
+          <TableAction
+            stopButtonPropagation
+            :actions="[
               {
                 label: '',
                 icon: 'material-symbols:edit-note-sharp',
-                onClick: openUserDialogue.bind(null, record),
+                onClick: openUserDialogue.bind(null, false, record),
               },
               {
                 label: '',
                 icon: 'ic:outline-delete-outline',
                 popConfirm: {
                   title: '是否删除？',
-                  confirm: openUserDialogue.bind(null, record),
+                  confirm: openUserDialogue.bind(null, false, record),
                 },
               },
             ]"
-        />
+          />
+        </template>
       </template>
-    </template>
-  </BasicTable>
-  <BasicModal
-    v-bind="$attrs"
-    @register="registerModel"
-    title="Modal Title"
-  >
-    <div class="pt-3px pr-3px">
-      <BasicForm @register="registerForm" :model="model" />
-    </div>
-  </BasicModal>
+    </BasicTable>
+    <BasicModal
+      v-bind="$attrs"
+      @register="registerModel"
+      :title="modelTitle"
+      :closeFunc="closeFunc"
+    >
+      <div class="pt-3px pr-3px">
+        <BasicForm @register="registerForm" />
+      </div>
+      <template #footer>
+        <div style="text-align: center">
+          <a-space :size="10">
+            <a-button type="primary" @click="resetFieldsProxy">重置</a-button>
+            <a-button type="primary" @click="handleSubmit">提交</a-button>
+          </a-space>
+        </div>
+      </template>
+    </BasicModal>
+  </div>
 </template>
 <script lang="ts">
   import { defineComponent, ref } from 'vue';
-  import {BasicTable, TableAction, useTable} from '/@/components/Table';
-  import {BasicModal, useModal } from '/@/components/Modal';
-  import {getBasicColumns, getFormConfig, getModalFormColumns} from './tableData';
-  import { Alert, Space } from 'ant-design-vue';
+  import { BasicTable, TableAction, useTable } from '/@/components/Table';
+  import { BasicModal, useModal } from '/@/components/Modal';
+  import { getTableColumns, getSearchColumns, getModalFormColumns } from './tableData';
+  import { Space } from 'ant-design-vue';
   import { userPage } from '/@/api/sys/user';
-  import {BasicForm, useForm} from "/@/components/Form";
+  import { BasicForm, useForm } from '/@/components/Form';
 
   export default defineComponent({
-    components: {BasicForm, TableAction, BasicTable, BasicModal, AAlert: Alert, ASpace: Space },
+    components: { BasicForm, TableAction, BasicTable, BasicModal, ASpace: Space },
     setup() {
       const checkedKeys = ref<Array<string | number>>([]);
-      const modelRef = ref({});
+      const modelTemp = ref<Recordable | null>({});
+      const modelTitle = ref<string>();
       const checkedKeysText = ref<string | number>();
       const [registerTable] = useTable({
         title: '',
         api: userPage,
-        columns: getBasicColumns(),
+        columns: getTableColumns(),
         useSearchForm: true,
-        formConfig: getFormConfig(),
+        formConfig: getSearchColumns(),
         showTableSetting: true,
         tableSetting: { fullScreen: true },
         showIndexColumn: false,
@@ -78,13 +98,9 @@
         },
       });
 
-      const [
-        registerForm,
-        {
-          // setFieldsValue,
-          // setProps
-        },
-      ] = useForm({
+      const [registerModel, { openModal }] = useModal();
+
+      const [registerForm, { resetFields, setFieldsValue }] = useForm({
         labelWidth: 120,
         schemas: getModalFormColumns(),
         showActionButtonGroup: false,
@@ -93,7 +109,32 @@
         },
       });
 
-      const [registerModel, { openModal: openModalProxy }] = useModal();
+      function openUserDialogue(isAdd: boolean, record: Recordable | null) {
+        if (isAdd) {
+          modelTitle.value = '新增';
+          modelTemp.value = {};
+        } else {
+          modelTitle.value = '修改';
+          modelTemp.value = record;
+        }
+        openModal(true);
+        setFieldsValue(record);
+      }
+
+      function resetFieldsProxy() {
+        setFieldsValue(modelTemp.value);
+      }
+
+      function handleSubmit(record: Recordable) {
+        console.log(record);
+        openModal(false);
+        resetFields();
+      }
+
+      function closeFunc() {
+        resetFields();
+        return true;
+      }
 
       function onSelect(record, selected) {
         if (selected) {
@@ -101,7 +142,7 @@
         } else {
           checkedKeys.value = checkedKeys.value.filter((id) => id !== record.id);
         }
-        checkedKeysText.value = checkedKeys.value.length > 0 ?  checkedKeys.value.length : '';
+        checkedKeysText.value = checkedKeys.value.length > 0 ? checkedKeys.value.length : '';
       }
 
       function onSelectAll(selected, _selectedRows, changeRows) {
@@ -113,12 +154,7 @@
             return !changeIds.includes(id);
           });
         }
-        checkedKeysText.value = checkedKeys.value.length > 0 ?  checkedKeys.value.length : '';
-      }
-
-      function openUserDialogue(record: Recordable){
-        modelRef.value = record;
-        openModalProxy(true);
+        checkedKeysText.value = checkedKeys.value.length > 0 ? checkedKeys.value.length : '';
       }
 
       return {
@@ -129,8 +165,11 @@
         checkedKeysText,
         onSelect,
         onSelectAll,
-        model: modelRef,
-        openUserDialogue
+        openUserDialogue,
+        closeFunc,
+        resetFieldsProxy,
+        handleSubmit,
+        modelTitle,
       };
     },
   });
