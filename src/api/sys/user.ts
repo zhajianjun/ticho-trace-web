@@ -8,6 +8,7 @@ import { ContentTypeEnum } from '/@/enums/httpEnum';
 enum Api {
   Login = '/oauth/token',
   GetUserInfo = '/user/getByUsername',
+  UserInfo = '/user',
   UserPage = '/user/page',
   GetPermCode = '/getPermCode',
 }
@@ -37,6 +38,10 @@ export function getUserInfo() {
 
 export function userPage(params: UserQuery) {
   return defHttp.get<User>({ url: Api.UserPage, params }, { errorMessageMode: 'none' });
+}
+
+export function modifyUser(params: User) {
+  return defHttp.put<User>({ url: Api.UserInfo, params }, { errorMessageMode: 'message' });
 }
 
 export function getPermCode() {

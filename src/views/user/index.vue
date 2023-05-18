@@ -8,14 +8,15 @@
             type="primary"
             preIcon="ant-design:plus-circle-outlined"
             @click="openUserDialogue(true, null)"
-            >新增</a-button
-          >
+            >新增
+          </a-button>
           <a-button ghost type="danger" preIcon="ant-design:delete-outlined"
-            >删除{{ checkedKeysText }}</a-button
-          >
+            >删除{{ checkedKeysText }}
+          </a-button>
         </a-space>
       </template>
       <template #bodyCell="{ column, record }">
+        <!--suppress TypeScriptUnresolvedReference -->
         <template v-if="column.key === 'action'">
           <TableAction
             stopButtonPropagation
@@ -59,19 +60,21 @@
   </div>
 </template>
 <script lang="ts">
-  import { defineComponent, ref } from 'vue';
+  import { defineComponent, ref, nextTick } from 'vue';
   import { BasicTable, TableAction, useTable } from '/@/components/Table';
   import { BasicModal, useModal } from '/@/components/Modal';
   import { getTableColumns, getSearchColumns, getModalFormColumns } from './tableData';
   import { Space } from 'ant-design-vue';
   import { userPage } from '/@/api/sys/user';
   import { BasicForm, useForm } from '/@/components/Form';
+  // import { User } from '/@/api/sys/model/userModel';
 
   export default defineComponent({
     components: { BasicForm, TableAction, BasicTable, BasicModal, ASpace: Space },
     setup() {
       const checkedKeys = ref<Array<string | number>>([]);
       const modelTemp = ref<Recordable | null>({});
+      const model = ref<Recordable | null>({});
       const modelTitle = ref<string>();
       const checkedKeysText = ref<string | number>();
       const [registerTable] = useTable({
@@ -100,7 +103,7 @@
 
       const [registerModel, { openModal }] = useModal();
 
-      const [registerForm, { resetFields, setFieldsValue }] = useForm({
+      const [registerForm, { resetFields, setFieldsValue, getFieldsValue }] = useForm({
         labelWidth: 120,
         schemas: getModalFormColumns(),
         showActionButtonGroup: false,
@@ -118,15 +121,22 @@
           modelTemp.value = record;
         }
         openModal(true);
-        setFieldsValue(record);
+        nextTick(() => {
+          setFieldsValue(modelTemp.value);
+        });
       }
 
       function resetFieldsProxy() {
+        if (modelTitle.value === '新增') {
+          resetFields();
+          return;
+        }
         setFieldsValue(modelTemp.value);
       }
 
-      function handleSubmit(record: Recordable) {
-        console.log(record);
+      function handleSubmit() {
+        // const user: Recordable<User> = getFieldsValue();
+        console.log(getFieldsValue());
         openModal(false);
         resetFields();
       }
@@ -170,6 +180,7 @@
         resetFieldsProxy,
         handleSubmit,
         modelTitle,
+        model,
       };
     },
   });

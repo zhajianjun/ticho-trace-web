@@ -138,6 +138,7 @@ export function getModalFormColumns(): FormSchema[] {
       colProps: {
         span: 24,
       },
+      defaultValue: null,
     },
   ];
 }
