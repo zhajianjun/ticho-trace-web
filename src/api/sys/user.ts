@@ -9,6 +9,7 @@ enum Api {
   Login = '/oauth/token',
   GetUserInfo = '/user/getByUsername',
   UserInfo = '/user',
+  DelUserBatch = '/user/removeByIds',
   UserPage = '/user/page',
   GetPermCode = '/getPermCode',
 }
@@ -40,8 +41,32 @@ export function userPage(params: UserQuery) {
   return defHttp.get<User>({ url: Api.UserPage, params }, { errorMessageMode: 'none' });
 }
 
-export function modifyUser(params: User) {
-  return defHttp.put<User>({ url: Api.UserInfo, params }, { errorMessageMode: 'message' });
+export function saveyUser(params: any) {
+  return defHttp.post<User>(
+    { url: Api.UserInfo, params },
+    { successMessageMode: 'message', errorMessageMode: 'message' },
+  );
+}
+
+export function delUser(params: string) {
+  return defHttp.delete<User>(
+    { url: Api.UserInfo + '?id=', params },
+    { successMessageMode: 'message', errorMessageMode: 'message'},
+  );
+}
+
+export function delUserBatch(params: string) {
+  return defHttp.delete<User>(
+    { url: Api.DelUserBatch + '?ids=', params },
+    { successMessageMode: 'message', errorMessageMode: 'message'},
+  );
+}
+
+export function modifyUser(params: any) {
+  return defHttp.put<User>(
+    { url: Api.UserInfo, params },
+    { successMessageMode: 'message', errorMessageMode: 'message' },
+  );
 }
 
 export function getPermCode() {

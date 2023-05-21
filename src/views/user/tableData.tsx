@@ -105,12 +105,19 @@ export function getTableColumns(): BasicColumn[] {
 export function getModalFormColumns(): FormSchema[] {
   return [
     {
+      field: `id`,
+      component: 'Input',
+      label: `编号`,
+      show: false,
+    },
+    {
       field: `username`,
       label: `账户`,
       component: 'Input',
       colProps: {
         span: 24,
       },
+      slot: 'usernameSlot',
       componentProps: {
         placeholder: '请输入账户',
       },
