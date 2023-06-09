@@ -51,14 +51,14 @@ export function saveyUser(params: any) {
 export function delUser(params: string) {
   return defHttp.delete<User>(
     { url: Api.UserInfo + '?id=', params },
-    { successMessageMode: 'message', errorMessageMode: 'message'},
+    { successMessageMode: 'message', errorMessageMode: 'message' },
   );
 }
 
 export function delUserBatch(params: string) {
   return defHttp.delete<User>(
     { url: Api.DelUserBatch + '?ids=', params },
-    { successMessageMode: 'message', errorMessageMode: 'message'},
+    { successMessageMode: 'message', errorMessageMode: 'message' },
   );
 }
 

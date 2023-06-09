@@ -35,4 +35,3 @@ export interface UserQuery {
   remark: string;
   systemIds: string[];
 }
-
