@@ -1,33 +1,46 @@
 import { FormProps } from '/@/components/Table';
 import { BasicColumn } from '/@/components/Table/src/types/table';
+import moment from 'moment';
+import { useUserStore } from '/@/store/modules/user';
+
+
+function getSystem() {
+  const userStore = useUserStore();
+  const {systems} = userStore?.getUserInfo;
+  return systems.map((item)=>{
+    return{
+      label: item.systemName,
+      value: item.systemId,
+    }
+  })
+}
+
+function getFirstSystemId() {
+  const userStore = useUserStore();
+  const {systems} = userStore?.getUserInfo;
+  return systems[0].systemId;
+}
 
 export function getSearchColumns(): Partial<FormProps> {
   return {
-    labelWidth: 100,
+    labelWidth: 180,
     schemas: [
-      {
-        field: `id`,
-        label: `主键编号`,
-        component: 'Input',
-        colProps: {
-          xl: 12,
-          xxl: 8,
-        },
-        componentProps: {
-          placeholder: '请输入主键编号',
-        },
-      },
       {
         field: `systemId`,
         label: `系统id`,
-        component: 'Input',
+        component: 'Select',
         colProps: {
           xl: 12,
           xxl: 8,
         },
         componentProps: {
           placeholder: '请输入系统id',
+          style: {
+            width: '100%',
+          },
+          options: getSystem(),
         },
+        defaultValue: getFirstSystemId(),
       },
       {
         field: `traceId`,
@@ -114,167 +127,126 @@ export function getSearchColumns(): Partial<FormProps> {
         },
       },
       {
-        field: `type`,
-        label: `请求类型`,
+        field: `logLevel`,
+        label: `日志级别`,
         component: 'Input',
         colProps: {
           xl: 12,
           xxl: 8,
         },
         componentProps: {
-          placeholder: '请输入请求类型',
+          placeholder: '请输入日志级别',
         },
       },
       {
-        field: `url`,
-        label: `接口`,
-        component: 'Input',
+        field: `startDateTime`,
+        label: `日志时间起`,
         colProps: {
           xl: 12,
           xxl: 8,
         },
+        component: 'DatePicker',
+        required: true,
         componentProps: {
-          placeholder: '请输入接口',
+          placeholder: '请输入日志时间起',
+          // 传给后端的时间格式--
+          valueFormat: 'YYYY-MM-DD HH:mm:ss.000',
+          // 显示的时间格式
+          showTime: {
+            format: 'YYYY-MM-DD HH:mm:ss',
+          },
+          // 设置不可选
+          disabledDate: (current) => {
+            // 不可选择未来时间
+            return current && current > Date.now();
+          },
+          style: {
+            width: '100%',
+          },
         },
+        defaultValue: moment().add(-7, 'd'),
       },
       {
-        field: `port`,
-        label: `端口号`,
-        component: 'Input',
+        field: `endDateTime`,
+        label: `日志时间止`,
         colProps: {
           xl: 12,
           xxl: 8,
         },
+        component: 'DatePicker',
+        required: true,
         componentProps: {
-          placeholder: '请输入端口号',
+          placeholder: '请输入日志时间止',
+          // 传给后端的时间格式--
+          valueFormat: 'YYYY-MM-DD HH:mm:ss.999',
+          // 显示的时间格式
+          showTime: {
+            format: 'YYYY-MM-DD HH:mm:ss',
+          },
+          // 设置不可选
+          disabledDate: (current) => {
+            // 不可选择未来时间
+            return current && current > Date.now();
+          },
+          style: {
+            width: '100%',
+          },
         },
+        defaultValue: Date.now(),
       },
       {
-        field: `fullUrl`,
-        label: `全路径接口`,
+        field: `className`,
+        label: `类名称`,
         component: 'Input',
         colProps: {
           xl: 12,
           xxl: 8,
         },
         componentProps: {
-          placeholder: '请输入全路径接口',
+          placeholder: '请输入类名称',
         },
       },
       {
         field: `method`,
-        label: `方法`,
+        label: `方法名`,
         component: 'Input',
         colProps: {
           xl: 12,
           xxl: 8,
         },
         componentProps: {
-          placeholder: '请输入方法',
+          placeholder: '请输入方法名',
         },
       },
       {
-        field: `status`,
-        label: `响应状态`,
+        field: `content`,
+        label: `内容`,
         component: 'Input',
         colProps: {
           xl: 12,
           xxl: 8,
         },
         componentProps: {
-          placeholder: '请输入响应状态',
+          placeholder: '请输入内容',
         },
       },
       {
-        field: `startTimeFirst`,
-        label: `请求开始时间起始`,
+        field: `isAsc`,
+        label: `是否按照时间递增排序`,
         component: 'Input',
         colProps: {
           xl: 12,
           xxl: 8,
         },
         componentProps: {
-          placeholder: '请输入请求开始时间起始',
-        },
-      },
-      {
-        field: `startTimeLast`,
-        label: `请求开始时间终止`,
-        component: 'Input',
-        colProps: {
-          xl: 12,
-          xxl: 8,
-        },
-        componentProps: {
-          placeholder: '请输入请求开始时间终止',
-        },
-      },
-      {
-        field: `endTimeFirst`,
-        label: `请求结束时间起始`,
-        component: 'Input',
-        colProps: {
-          xl: 12,
-          xxl: 8,
-        },
-        componentProps: {
-          placeholder: '请输入请求结束时间起始',
-        },
-      },
-      {
-        field: `endTimeLast`,
-        label: `请求结束时间终止`,
-        component: 'Input',
-        colProps: {
-          xl: 12,
-          xxl: 8,
-        },
-        componentProps: {
-          placeholder: '请输入请求结束时间终止',
-        },
-      },
-      {
-        field: `consumeFirst`,
-        label: `耗时起始`,
-        component: 'Input',
-        colProps: {
-          xl: 12,
-          xxl: 8,
-        },
-        componentProps: {
-          placeholder: '请输入耗时起始',
-        },
-      },
-      {
-        field: `consumeLast`,
-        label: `耗时终止`,
-        component: 'Input',
-        colProps: {
-          xl: 12,
-          xxl: 8,
-        },
-        componentProps: {
-          placeholder: '请输入耗时终止',
+          placeholder: '请输入是否按照时间递增排序',
         },
       },
     ],
   };
 }
-
 export function getTableColumns(): BasicColumn[] {
   return [
-    {
-      title: '主键编号',
-      dataIndex: 'id',
-    },
-    {
-      title: '系统id',
-      dataIndex: 'systemId',
-    },
-    {
-      title: '系统名称',
-      dataIndex: 'systemName',
-    },
     {
       title: '链路id',
       dataIndex: 'traceId',
@@ -304,48 +276,36 @@ export function getTableColumns(): BasicColumn[] {
       dataIndex: 'preIp',
     },
     {
-      title: '请求类型',
-      dataIndex: 'type',
+      title: '日志级别',
+      dataIndex: 'logLevel',
     },
     {
-      title: '接口',
-      dataIndex: 'url',
+      title: '日志时间',
+      dataIndex: 'dateTime',
     },
     {
-      title: '端口号',
-      dataIndex: 'port',
+      title: '日志时间戳',
+      dataIndex: 'dtTime',
     },
     {
-      title: '全路径接口',
-      dataIndex: 'fullUrl',
+      title: '类名称',
+      dataIndex: 'className',
     },
     {
-      title: '方法',
+      title: '方法名',
       dataIndex: 'method',
     },
     {
-      title: '响应状态',
-      dataIndex: 'status',
+      title: '序列号',
+      dataIndex: 'seq',
     },
     {
-      title: '请求开始时间戳',
-      dataIndex: 'start',
+      title: '内容',
+      dataIndex: 'content',
     },
     {
-      title: '请求结束时间戳',
-      dataIndex: 'end',
-    },
-    {
-      title: '请求开始时间',
-      dataIndex: 'startTime',
-    },
-    {
-      title: '请求结束时间',
-      dataIndex: 'endTime',
-    },
-    {
-      title: '耗时',
-      dataIndex: 'consume',
+      title: '线程名称',
+      dataIndex: 'threadName',
     },
     {
       title: '创建时间',

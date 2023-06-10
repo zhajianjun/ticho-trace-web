@@ -1,13 +1,15 @@
 import { defHttp } from '/@/utils/http/axios';
-import { Trace } from '/@/api/trace/model/traceModel';
+import { Trace, TraceQuery } from '/@/api/trace/model/traceModel';
 
 enum Api {
   GetByTraceId = '/trace/getByTraceId',
+  TracePage = '/trace/page',
 }
 
-/**
- * @description: getUserInfo
- */
+export function tracePage(params: TraceQuery) {
+  return defHttp.get<Trace>({ url: Api.TracePage, params }, { errorMessageMode: 'none' });
+}
+
 export function getByTraceId(params: string) {
   return defHttp.get<Trace>(
     { url: Api.GetByTraceId, params },

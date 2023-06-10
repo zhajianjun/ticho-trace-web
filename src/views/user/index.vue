@@ -55,7 +55,11 @@
       <div class="pt-3px pr-3px" ref="wrapEl">
         <BasicForm @register="registerForm">
           <template #usernameSlot="{ model, field }">
-            <a-input v-model:value="model[field]" :disabled="!isAddProxy" placeholder="请输入账号" />
+            <a-input
+              v-model:value="model[field]"
+              :disabled="!isAddProxy"
+              placeholder="请输入账号"
+            />
           </template>
         </BasicForm>
       </div>

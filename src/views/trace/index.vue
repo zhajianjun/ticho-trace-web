@@ -14,7 +14,7 @@
   import { defineComponent, ref } from 'vue';
   import { BasicTable, TableAction, useTable } from '/@/components/Table';
   import { getTableColumns, getSearchColumns } from './tableData';
-  import { getByTraceId } from '/src/api/trace/trace';
+  import { tracePage } from '/@/api/trace/trace';
 
   export default defineComponent({
     components: {
@@ -26,7 +26,7 @@
       const checkedKeysCount = ref<string | number>();
       const [registerTable] = useTable({
         title: '',
-        api: getByTraceId,
+        api: tracePage,
         columns: getTableColumns(),
         useSearchForm: true,
         formConfig: getSearchColumns(),
@@ -39,7 +39,6 @@
           onSelect: onSelect,
           onSelectAll: onSelectAll,
         },
-        pagination: false,
         actionColumn: {
           width: 160,
           title: '操作',
@@ -47,7 +46,6 @@
           fixed: 'right',
           // slots: { customRender: 'action' },
         },
-        immediate: false,
       });
 
       function onSelect(record, selected) {

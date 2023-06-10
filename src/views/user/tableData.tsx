@@ -126,6 +126,9 @@ export function getModalFormColumns(): FormSchema[] {
       field: `realname`,
       label: `真实姓名`,
       component: 'Input',
+      componentProps: {
+        placeholder: '请输入账户',
+      },
       colProps: {
         span: 24,
       },
