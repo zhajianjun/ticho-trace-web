@@ -31,7 +31,7 @@ export function getSearchColumns(): Partial<FormProps> {
         component: 'Select',
         colProps: {
           xl: 12,
-          xxl: 8,
+          xxl: 6,
         },
         componentProps: {
           placeholder: '请输入系统id',
@@ -48,7 +48,7 @@ export function getSearchColumns(): Partial<FormProps> {
         component: 'Input',
         colProps: {
           xl: 12,
-          xxl: 8,
+          xxl: 6,
         },
         componentProps: {
           placeholder: '请输入链路id',
@@ -60,7 +60,7 @@ export function getSearchColumns(): Partial<FormProps> {
         component: 'Input',
         colProps: {
           xl: 12,
-          xxl: 8,
+          xxl: 6,
         },
         componentProps: {
           placeholder: '请输入跨度id',
@@ -72,7 +72,7 @@ export function getSearchColumns(): Partial<FormProps> {
         component: 'Input',
         colProps: {
           xl: 12,
-          xxl: 8,
+          xxl: 6,
         },
         componentProps: {
           placeholder: '请输入应用名称',
@@ -84,7 +84,7 @@ export function getSearchColumns(): Partial<FormProps> {
         component: 'Input',
         colProps: {
           xl: 12,
-          xxl: 8,
+          xxl: 6,
         },
         componentProps: {
           placeholder: '请输入应用环境',
@@ -96,7 +96,7 @@ export function getSearchColumns(): Partial<FormProps> {
         component: 'Input',
         colProps: {
           xl: 12,
-          xxl: 8,
+          xxl: 6,
         },
         componentProps: {
           placeholder: '请输入ip',
@@ -108,7 +108,7 @@ export function getSearchColumns(): Partial<FormProps> {
         component: 'Input',
         colProps: {
           xl: 12,
-          xxl: 8,
+          xxl: 6,
         },
         componentProps: {
           placeholder: '请输入上个链路的应用名称',
@@ -120,7 +120,7 @@ export function getSearchColumns(): Partial<FormProps> {
         component: 'Input',
         colProps: {
           xl: 12,
-          xxl: 8,
+          xxl: 6,
         },
         componentProps: {
           placeholder: '请输入上个链路的Ip',
@@ -132,7 +132,7 @@ export function getSearchColumns(): Partial<FormProps> {
         component: 'Input',
         colProps: {
           xl: 12,
-          xxl: 8,
+          xxl: 6,
         },
         componentProps: {
           placeholder: '请输入日志级别',
@@ -143,14 +143,14 @@ export function getSearchColumns(): Partial<FormProps> {
         label: `日志时间起`,
         colProps: {
           xl: 12,
-          xxl: 8,
+          xxl: 6,
         },
         component: 'DatePicker',
         required: true,
         componentProps: {
           placeholder: '请输入日志时间起',
           // 传给后端的时间格式--
-          valueFormat: 'YYYY-MM-DD HH:mm:ss.000',
+          valueFormat: 'YYYY-MM-DD HH:mm:ss',
           // 显示的时间格式
           showTime: {
             format: 'YYYY-MM-DD HH:mm:ss',
@@ -164,21 +164,21 @@ export function getSearchColumns(): Partial<FormProps> {
             width: '100%',
           },
         },
-        defaultValue: moment().add(-7, 'd'),
+        defaultValue: moment().add(-7, 'd').format('YYYY-MM-DD HH:mm:ss'),
       },
       {
         field: `endDateTime`,
         label: `日志时间止`,
         colProps: {
           xl: 12,
-          xxl: 8,
+          xxl: 6,
         },
         component: 'DatePicker',
         required: true,
         componentProps: {
           placeholder: '请输入日志时间止',
           // 传给后端的时间格式--
-          valueFormat: 'YYYY-MM-DD HH:mm:ss.999',
+          valueFormat: 'YYYY-MM-DD HH:mm:ss',
           // 显示的时间格式
           showTime: {
             format: 'YYYY-MM-DD HH:mm:ss',
@@ -192,7 +192,7 @@ export function getSearchColumns(): Partial<FormProps> {
             width: '100%',
           },
         },
-        defaultValue: Date.now(),
+        defaultValue: moment().format('YYYY-MM-DD HH:mm:ss'),
       },
       {
         field: `className`,
@@ -200,7 +200,7 @@ export function getSearchColumns(): Partial<FormProps> {
         component: 'Input',
         colProps: {
           xl: 12,
-          xxl: 8,
+          xxl: 6,
         },
         componentProps: {
           placeholder: '请输入类名称',
@@ -212,7 +212,7 @@ export function getSearchColumns(): Partial<FormProps> {
         component: 'Input',
         colProps: {
           xl: 12,
-          xxl: 8,
+          xxl: 6,
         },
         componentProps: {
           placeholder: '请输入方法名',
@@ -224,7 +224,7 @@ export function getSearchColumns(): Partial<FormProps> {
         component: 'Input',
         colProps: {
           xl: 12,
-          xxl: 8,
+          xxl: 6,
         },
         componentProps: {
           placeholder: '请输入内容',
@@ -236,7 +236,7 @@ export function getSearchColumns(): Partial<FormProps> {
         component: 'Input',
         colProps: {
           xl: 12,
-          xxl: 8,
+          xxl: 6,
         },
         componentProps: {
           placeholder: '请输入是否按照时间递增排序',
@@ -250,66 +250,80 @@ export function getTableColumns(): BasicColumn[] {
     {
       title: '链路id',
       dataIndex: 'traceId',
+      resizable: true,
+      width: 150,
     },
     {
       title: '跨度id',
       dataIndex: 'spanId',
+      resizable: true,
+      width: 60,
     },
     {
       title: '应用名称',
       dataIndex: 'appName',
+      resizable: true,
+      width: 100,
     },
     {
       title: '应用环境',
       dataIndex: 'env',
+      resizable: true,
+      width: 60,
     },
     {
       title: 'ip',
       dataIndex: 'ip',
+      resizable: true,
+      width: 60,
     },
     {
       title: '上个链路的应用名称',
       dataIndex: 'preAppName',
+      resizable: true,
+      width: 100,
     },
     {
       title: '上个链路的Ip',
       dataIndex: 'preIp',
+      resizable: true,
+      width: 80,
     },
     {
       title: '日志级别',
       dataIndex: 'logLevel',
+      resizable: true,
+      width: 60,
     },
     {
       title: '日志时间',
       dataIndex: 'dateTime',
-    },
-    {
-      title: '日志时间戳',
-      dataIndex: 'dtTime',
+      resizable: true,
+      width: 160,
     },
     {
       title: '类名称',
       dataIndex: 'className',
+      resizable: true,
+      width: 150,
     },
     {
       title: '方法名',
       dataIndex: 'method',
-    },
-    {
-      title: '序列号',
-      dataIndex: 'seq',
-    },
-    {
-      title: '内容',
-      dataIndex: 'content',
+      resizable: true,
+      width: 150,
     },
     {
       title: '线程名称',
       dataIndex: 'threadName',
+      resizable: true,
+      width: 100,
     },
     {
-      title: '创建时间',
-      dataIndex: 'createTime',
+      title: '内容',
+      dataIndex: 'content',
+      resizable: true,
+      width: 300,
     },
   ];
 }

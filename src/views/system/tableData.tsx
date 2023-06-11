@@ -12,7 +12,7 @@ export function getSearchColumns(): Partial<FormProps> {
         component: 'Input',
         colProps: {
           xl: 12,
-          xxl: 8,
+          xxl: 6,
         },
         componentProps: {
           placeholder: '请输入系统id',
@@ -24,7 +24,7 @@ export function getSearchColumns(): Partial<FormProps> {
         component: 'Input',
         colProps: {
           xl: 12,
-          xxl: 8,
+          xxl: 6,
         },
       },
       {
@@ -33,7 +33,7 @@ export function getSearchColumns(): Partial<FormProps> {
         component: 'Input',
         colProps: {
           xl: 12,
-          xxl: 8,
+          xxl: 6,
         },
       },
       {
@@ -42,7 +42,7 @@ export function getSearchColumns(): Partial<FormProps> {
         component: 'Input',
         colProps: {
           xl: 12,
-          xxl: 8,
+          xxl: 6,
         },
       },
       {
@@ -51,7 +51,7 @@ export function getSearchColumns(): Partial<FormProps> {
         component: 'Input',
         colProps: {
           xl: 12,
-          xxl: 8,
+          xxl: 6,
         },
       },
     ],

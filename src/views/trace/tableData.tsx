@@ -6,24 +6,12 @@ export function getSearchColumns(): Partial<FormProps> {
     labelWidth: 100,
     schemas: [
       {
-        field: `id`,
-        label: `主键编号`,
-        component: 'Input',
-        colProps: {
-          xl: 12,
-          xxl: 8,
-        },
-        componentProps: {
-          placeholder: '请输入主键编号',
-        },
-      },
-      {
         field: `systemId`,
         label: `系统id`,
         component: 'Input',
         colProps: {
           xl: 12,
-          xxl: 8,
+          xxl: 6,
         },
         componentProps: {
           placeholder: '请输入系统id',
@@ -35,7 +23,7 @@ export function getSearchColumns(): Partial<FormProps> {
         component: 'Input',
         colProps: {
           xl: 12,
-          xxl: 8,
+          xxl: 6,
         },
         componentProps: {
           placeholder: '请输入链路id',
@@ -47,7 +35,7 @@ export function getSearchColumns(): Partial<FormProps> {
         component: 'Input',
         colProps: {
           xl: 12,
-          xxl: 8,
+          xxl: 6,
         },
         componentProps: {
           placeholder: '请输入跨度id',
@@ -59,7 +47,7 @@ export function getSearchColumns(): Partial<FormProps> {
         component: 'Input',
         colProps: {
           xl: 12,
-          xxl: 8,
+          xxl: 6,
         },
         componentProps: {
           placeholder: '请输入应用名称',
@@ -71,7 +59,7 @@ export function getSearchColumns(): Partial<FormProps> {
         component: 'Input',
         colProps: {
           xl: 12,
-          xxl: 8,
+          xxl: 6,
         },
         componentProps: {
           placeholder: '请输入应用环境',
@@ -83,7 +71,7 @@ export function getSearchColumns(): Partial<FormProps> {
         component: 'Input',
         colProps: {
           xl: 12,
-          xxl: 8,
+          xxl: 6,
         },
         componentProps: {
           placeholder: '请输入ip',
@@ -95,7 +83,7 @@ export function getSearchColumns(): Partial<FormProps> {
         component: 'Input',
         colProps: {
           xl: 12,
-          xxl: 8,
+          xxl: 6,
         },
         componentProps: {
           placeholder: '请输入上个链路的应用名称',
@@ -107,7 +95,7 @@ export function getSearchColumns(): Partial<FormProps> {
         component: 'Input',
         colProps: {
           xl: 12,
-          xxl: 8,
+          xxl: 6,
         },
         componentProps: {
           placeholder: '请输入上个链路的Ip',
@@ -119,7 +107,7 @@ export function getSearchColumns(): Partial<FormProps> {
         component: 'Input',
         colProps: {
           xl: 12,
-          xxl: 8,
+          xxl: 6,
         },
         componentProps: {
           placeholder: '请输入请求类型',
@@ -131,7 +119,7 @@ export function getSearchColumns(): Partial<FormProps> {
         component: 'Input',
         colProps: {
           xl: 12,
-          xxl: 8,
+          xxl: 6,
         },
         componentProps: {
           placeholder: '请输入接口',
@@ -143,7 +131,7 @@ export function getSearchColumns(): Partial<FormProps> {
         component: 'Input',
         colProps: {
           xl: 12,
-          xxl: 8,
+          xxl: 6,
         },
         componentProps: {
           placeholder: '请输入端口号',
@@ -155,7 +143,7 @@ export function getSearchColumns(): Partial<FormProps> {
         component: 'Input',
         colProps: {
           xl: 12,
-          xxl: 8,
+          xxl: 6,
         },
         componentProps: {
           placeholder: '请输入全路径接口',
@@ -167,7 +155,7 @@ export function getSearchColumns(): Partial<FormProps> {
         component: 'Input',
         colProps: {
           xl: 12,
-          xxl: 8,
+          xxl: 6,
         },
         componentProps: {
           placeholder: '请输入方法',
@@ -179,7 +167,7 @@ export function getSearchColumns(): Partial<FormProps> {
         component: 'Input',
         colProps: {
           xl: 12,
-          xxl: 8,
+          xxl: 6,
         },
         componentProps: {
           placeholder: '请输入响应状态',
@@ -191,7 +179,7 @@ export function getSearchColumns(): Partial<FormProps> {
         component: 'Input',
         colProps: {
           xl: 12,
-          xxl: 8,
+          xxl: 6,
         },
         componentProps: {
           placeholder: '请输入请求开始时间起始',
@@ -203,7 +191,7 @@ export function getSearchColumns(): Partial<FormProps> {
         component: 'Input',
         colProps: {
           xl: 12,
-          xxl: 8,
+          xxl: 6,
         },
         componentProps: {
           placeholder: '请输入请求开始时间终止',
@@ -215,7 +203,7 @@ export function getSearchColumns(): Partial<FormProps> {
         component: 'Input',
         colProps: {
           xl: 12,
-          xxl: 8,
+          xxl: 6,
         },
         componentProps: {
           placeholder: '请输入请求结束时间起始',
@@ -227,7 +215,7 @@ export function getSearchColumns(): Partial<FormProps> {
         component: 'Input',
         colProps: {
           xl: 12,
-          xxl: 8,
+          xxl: 6,
         },
         componentProps: {
           placeholder: '请输入请求结束时间终止',
@@ -239,7 +227,7 @@ export function getSearchColumns(): Partial<FormProps> {
         component: 'Input',
         colProps: {
           xl: 12,
-          xxl: 8,
+          xxl: 6,
         },
         componentProps: {
           placeholder: '请输入耗时起始',
@@ -251,7 +239,7 @@ export function getSearchColumns(): Partial<FormProps> {
         component: 'Input',
         colProps: {
           xl: 12,
-          xxl: 8,
+          xxl: 6,
         },
         componentProps: {
           placeholder: '请输入耗时终止',
@@ -264,92 +252,100 @@ export function getSearchColumns(): Partial<FormProps> {
 export function getTableColumns(): BasicColumn[] {
   return [
     {
-      title: '主键编号',
-      dataIndex: 'id',
-    },
-    {
-      title: '系统id',
-      dataIndex: 'systemId',
-    },
-    {
       title: '系统名称',
       dataIndex: 'systemName',
+      resizable: true,
+      width: 60,
     },
     {
       title: '链路id',
       dataIndex: 'traceId',
+      resizable: true,
+      width: 100,
     },
     {
       title: '跨度id',
       dataIndex: 'spanId',
+      resizable: true,
+      width: 60,
     },
     {
       title: '应用名称',
       dataIndex: 'appName',
+      resizable: true,
+      width: 100,
     },
     {
       title: '应用环境',
       dataIndex: 'env',
-    },
-    {
-      title: 'ip',
-      dataIndex: 'ip',
-    },
-    {
-      title: '上个链路的应用名称',
-      dataIndex: 'preAppName',
-    },
-    {
-      title: '上个链路的Ip',
-      dataIndex: 'preIp',
+      resizable: true,
+      width: 60,
     },
     {
       title: '请求类型',
       dataIndex: 'type',
+      resizable: true,
+      width: 40,
     },
     {
       title: '接口',
       dataIndex: 'url',
+      resizable: true,
+      width: 100,
+    },
+    {
+      title: 'ip',
+      dataIndex: 'ip',
+      resizable: true,
+      width: 60,
     },
     {
       title: '端口号',
       dataIndex: 'port',
+      resizable: true,
+      width: 40,
     },
     {
-      title: '全路径接口',
-      dataIndex: 'fullUrl',
+      title: '上个链路的应用名称',
+      dataIndex: 'preAppName',
+      resizable: true,
+      width: 100,
+    },
+    {
+      title: '上个链路的Ip',
+      dataIndex: 'preIp',
+      resizable: true,
+      width: 60,
     },
     {
       title: '方法',
       dataIndex: 'method',
+      resizable: true,
+      width: 40,
     },
     {
       title: '响应状态',
       dataIndex: 'status',
-    },
-    {
-      title: '请求开始时间戳',
-      dataIndex: 'start',
-    },
-    {
-      title: '请求结束时间戳',
-      dataIndex: 'end',
+      resizable: true,
+      width: 40,
     },
     {
       title: '请求开始时间',
       dataIndex: 'startTime',
+      resizable: true,
+      width: 160,
     },
     {
       title: '请求结束时间',
       dataIndex: 'endTime',
+      resizable: true,
+      width: 160,
     },
     {
       title: '耗时',
       dataIndex: 'consume',
-    },
-    {
-      title: '创建时间',
-      dataIndex: 'createTime',
+      resizable: true,
+      width: 60,
     },
   ];
 }

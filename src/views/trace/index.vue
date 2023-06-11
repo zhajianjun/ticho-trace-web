@@ -39,13 +39,15 @@
           onSelect: onSelect,
           onSelectAll: onSelectAll,
         },
-        actionColumn: {
-          width: 160,
-          title: '操作',
-          dataIndex: 'action',
-          fixed: 'right',
-          // slots: { customRender: 'action' },
+        striped: true,
+        canColDrag: true,
+        pagination: {
+          pageSize: 15,
+          pageSizeOptions: ['10', '15', '20', '30', '50', '100'],
+          position: [ 'bottomCenter' ] ,
+          size: 'large',
         },
+        loading: true,
       });
 
       function onSelect(record, selected) {

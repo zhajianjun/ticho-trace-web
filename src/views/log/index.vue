@@ -1,12 +1,6 @@
 <template>
   <div>
-    <BasicTable @register="registerTable">
-      <template #bodyCell="{ column }">
-        <!--suppress TypeScriptUnresolvedReference -->
-        <template v-if="column.key === 'action'">
-          <TableAction stopButtonPropagation />
-        </template>
-      </template>
+    <BasicTable @register="registerTable" @resizeColumn="handleResizeColumn">
     </BasicTable>
   </div>
 </template>
@@ -40,19 +34,25 @@
           onSelect: onSelect,
           onSelectAll: onSelectAll,
         },
-        actionColumn: {
-          width: 160,
-          title: '操作',
-          dataIndex: 'action',
-          fixed: 'right',
-          // slots: { customRender: 'action' },
+        striped: true,
+        canColDrag: true,
+        pagination: {
+          pageSize: 15,
+          pageSizeOptions: ['10', '15', '20', '30', '50', '100'],
+          position: [ 'bottomCenter' ] ,
+          size: 'large',
         },
+        loading: true,
       });
 
       function logPageProxy(params) {
         return logPage(params).catch((err) => {
           message.error(err.message);
         });
+      }
+
+      function handleResizeColumn(w, col) {
+        col.width = w;
       }
 
       function onSelect(record, selected) {
@@ -83,6 +83,7 @@
         onSelect,
         onSelectAll,
         logPageProxy,
+        handleResizeColumn,
       };
     },
   });
