@@ -1,6 +1,6 @@
 <template>
   <div>
-    <BasicTable @register="registerTable">
+    <BasicTable @register="registerTable" @resize-column="handleResizeColumn">
       <template #tableTitle>
         <a-space :size="10">
           <a-button
@@ -51,6 +51,7 @@
       @register="registerModel"
       :title="modelTitle"
       :closeFunc="closeFunc"
+      :maskClosable="false"
     >
       <div class="pt-3px pr-3px" ref="wrapEl">
         <BasicForm @register="registerForm">
@@ -116,7 +117,7 @@
           onSelectAll: onSelectAll,
         },
         actionColumn: {
-          width: 160,
+          width: 40,
           title: '操作',
           dataIndex: 'action',
           fixed: 'right',
@@ -127,10 +128,11 @@
         pagination: {
           pageSize: 15,
           pageSizeOptions: ['10', '15', '20', '30', '50', '100'],
-          position: [ 'bottomCenter' ] ,
+          position: ['bottomCenter'],
           size: 'large',
         },
         loading: true,
+        bordered: true,
       });
 
       const [registerModel, { openModal }] = useModal();
@@ -254,6 +256,10 @@
         checkedKeysCount.value = checkedKeys.value.length > 0 ? checkedKeys.value.length : '';
       }
 
+      function handleResizeColumn(w, col) {
+        col.width = w;
+      }
+
       return {
         registerTable,
         registerModel,
@@ -271,6 +277,7 @@
         deleteUser,
         deleteUserBatch,
         isAddProxy,
+        handleResizeColumn,
       };
     },
   });

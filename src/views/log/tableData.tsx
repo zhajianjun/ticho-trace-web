@@ -3,21 +3,20 @@ import { BasicColumn } from '/@/components/Table/src/types/table';
 import moment from 'moment';
 import { useUserStore } from '/@/store/modules/user';
 
-
 function getSystem() {
   const userStore = useUserStore();
-  const {systems} = userStore?.getUserInfo;
-  return systems.map((item)=>{
-    return{
+  const { systems } = userStore?.getUserInfo;
+  return systems.map((item) => {
+    return {
       label: item.systemName,
       value: item.systemId,
-    }
-  })
+    };
+  });
 }
 
 function getFirstSystemId() {
   const userStore = useUserStore();
-  const {systems} = userStore?.getUserInfo;
+  const { systems } = userStore?.getUserInfo;
   return systems[0].systemId;
 }
 

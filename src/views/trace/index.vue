@@ -1,6 +1,6 @@
 <template>
   <div>
-    <BasicTable @register="registerTable">
+    <BasicTable @register="registerTable" @resize-column="handleResizeColumn">
       <template #bodyCell="{ column }">
         <!--suppress TypeScriptUnresolvedReference -->
         <template v-if="column.key === 'action'">
@@ -44,10 +44,11 @@
         pagination: {
           pageSize: 15,
           pageSizeOptions: ['10', '15', '20', '30', '50', '100'],
-          position: [ 'bottomCenter' ] ,
+          position: ['bottomCenter'],
           size: 'large',
         },
         loading: true,
+        bordered: true,
       });
 
       function onSelect(record, selected) {
@@ -70,13 +71,16 @@
         }
         checkedKeysCount.value = checkedKeys.value.length > 0 ? checkedKeys.value.length : '';
       }
-
+      function handleResizeColumn(w, col) {
+        col.width = w;
+      }
       return {
         registerTable,
         checkedKeys,
         checkedKeysCount,
         onSelect,
         onSelectAll,
+        handleResizeColumn,
       };
     },
   });

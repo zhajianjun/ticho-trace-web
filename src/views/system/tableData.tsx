@@ -61,52 +61,65 @@ export function getSearchColumns(): Partial<FormProps> {
 export function getTableColumns(): BasicColumn[] {
   return [
     {
-      title: '系统id',
+      title: '系统编号',
       dataIndex: 'systemId',
-      // width: 80,
+      resizable: true,
+      width: 80,
     },
     {
       title: '系统名称',
       dataIndex: 'systemName',
-      // width: 80,
+      resizable: true,
+      width: 60,
     },
     {
       title: '秘钥',
       dataIndex: 'secret',
-      // width: 150,
-      // sorter: true,
-      // defaultHidden: true,
+      resizable: true,
+      width: 120,
     },
     {
       title: '系统状态',
       // width: 80,
       // sorter: true,
       dataIndex: 'status',
-    },
-    {
-      title: '备注信息',
-      // sorter: true,
-      dataIndex: 'remark',
+      resizable: true,
+      width: 40,
     },
     {
       title: '创建人',
       // sorter: true,
       dataIndex: 'createBy',
+      resizable: true,
+      width: 40,
     },
     {
       title: '创建时间',
       // sorter: true,
       dataIndex: 'createTime',
+      resizable: true,
+      width: 100,
     },
     {
       title: '更新人',
       // sorter: true,
       dataIndex: 'updateBy',
+      resizable: true,
+      width: 40,
     },
     {
       title: '更新时间',
       // sorter: true,
       dataIndex: 'updateTime',
+      resizable: true,
+      width: 100,
+    },
+    {
+      title: '备注信息',
+      // sorter: true,
+      dataIndex: 'remark',
+      resizable: true,
+      width: 120,
     },
   ];
 }
@@ -121,7 +134,7 @@ export function getModalFormColumns(): FormSchema[] {
     },
     {
       field: `systemId`,
-      label: `系统id`,
+      label: `系统编号`,
       component: 'Input',
       colProps: {
         span: 24,
@@ -158,7 +171,7 @@ export function getModalFormColumns(): FormSchema[] {
     {
       field: `remark`,
       label: `备注信息`,
-      component: 'Input',
+      component: 'InputTextArea',
       colProps: {
         span: 24,
       },

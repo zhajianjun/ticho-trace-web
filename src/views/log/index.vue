@@ -1,19 +1,17 @@
 <template>
   <div>
-    <BasicTable @register="registerTable" @resizeColumn="handleResizeColumn">
-    </BasicTable>
+    <BasicTable @register="registerTable" @resize-column="handleResizeColumn" />
   </div>
 </template>
 <script lang="ts">
   import { defineComponent, ref } from 'vue';
-  import { BasicTable, TableAction, useTable } from '/@/components/Table';
+  import { BasicTable, useTable } from '/@/components/Table';
   import { getTableColumns, getSearchColumns } from './tableData';
   import { logPage } from '/@/api/log/log';
   import { message } from 'ant-design-vue';
 
   export default defineComponent({
     components: {
-      TableAction,
       BasicTable,
     },
     setup() {
@@ -39,10 +37,11 @@
         pagination: {
           pageSize: 15,
           pageSizeOptions: ['10', '15', '20', '30', '50', '100'],
-          position: [ 'bottomCenter' ] ,
+          position: ['bottomCenter'],
           size: 'large',
         },
         loading: true,
+        bordered: true,
       });
 
       function logPageProxy(params) {
