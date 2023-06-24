@@ -15,6 +15,7 @@
   import { BasicTable, TableAction, useTable } from '/@/components/Table';
   import { getTableColumns, getSearchColumns } from './tableData';
   import { tracePage } from '/@/api/trace/trace';
+  import { message } from 'ant-design-vue';
 
   export default defineComponent({
     components: {
@@ -26,7 +27,7 @@
       const checkedKeysCount = ref<string | number>();
       const [registerTable] = useTable({
         title: '',
-        api: tracePage,
+        api: tracePageProxy,
         columns: getTableColumns(),
         useSearchForm: true,
         formConfig: getSearchColumns(),
@@ -50,6 +51,12 @@
         loading: true,
         bordered: true,
       });
+
+      function tracePageProxy(params) {
+        return tracePage(params).catch((err) => {
+          message.error(err.message);
+        });
+      }
 
       function onSelect(record, selected) {
         if (selected) {
@@ -81,6 +88,7 @@
         onSelect,
         onSelectAll,
         handleResizeColumn,
+        tracePageProxy,
       };
     },
   });

@@ -76,6 +76,7 @@
   import { Space } from 'ant-design-vue';
   import { systemPage, saveySystem, modifySystem, delSystem } from '/@/api/system/system';
   import { BasicForm, useForm } from '/@/components/Form';
+  import { message } from 'ant-design-vue';
 
   export default defineComponent({
     components: {
@@ -94,7 +95,7 @@
       const isAddProxy = ref<boolean>(true);
       const [registerTable, { reload }] = useTable({
         title: '',
-        api: systemPage,
+        api: systemPageProxy,
         columns: getTableColumns(),
         useSearchForm: true,
         formConfig: getSearchColumns(),
@@ -144,6 +145,12 @@
           absolute: true,
         },
       });
+
+      function systemPageProxy(params) {
+        return systemPage(params).catch((err) => {
+          message.error(err.message);
+        });
+      }
 
       function openUserDialogue(isAdd: boolean, record: Recordable | null) {
         isAddProxy.value = isAdd;
@@ -247,6 +254,7 @@
         deleteUser,
         isAddProxy,
         handleResizeColumn,
+        systemPageProxy,
       };
     },
   });

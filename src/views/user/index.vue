@@ -103,7 +103,7 @@
       const isAddProxy = ref<boolean>(true);
       const [registerTable, { reload }] = useTable({
         title: '',
-        api: userPage,
+        api: userPageProxy,
         columns: getTableColumns(),
         useSearchForm: true,
         formConfig: getSearchColumns(),
@@ -153,6 +153,12 @@
           absolute: true,
         },
       });
+
+      function userPageProxy(params) {
+        return userPage(params).catch((err) => {
+          message.error(err.message);
+        });
+      }
 
       function openUserDialogue(isAdd: boolean, record: Recordable | null) {
         isAddProxy.value = isAdd;
@@ -278,6 +284,7 @@
         deleteUserBatch,
         isAddProxy,
         handleResizeColumn,
+        userPageProxy,
       };
     },
   });

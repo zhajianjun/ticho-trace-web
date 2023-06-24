@@ -26,14 +26,14 @@ export function getSearchColumns(): Partial<FormProps> {
     schemas: [
       {
         field: `systemId`,
-        label: `系统id`,
+        label: `系统`,
         component: 'Select',
         colProps: {
           xl: 12,
           xxl: 6,
         },
         componentProps: {
-          placeholder: '请输入系统id',
+          placeholder: '请选择系统',
           style: {
             width: '100%',
           },

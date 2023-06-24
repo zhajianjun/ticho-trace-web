@@ -1,5 +1,24 @@
 import { FormProps } from '/@/components/Table';
 import { BasicColumn } from '/@/components/Table/src/types/table';
+import moment from 'moment';
+import { useUserStore } from '/@/store/modules/user';
+
+function getSystem() {
+  const userStore = useUserStore();
+  const { systems } = userStore?.getUserInfo;
+  return systems.map((item) => {
+    return {
+      label: item.systemName,
+      value: item.systemId,
+    };
+  });
+}
+
+function getFirstSystemId() {
+  const userStore = useUserStore();
+  const { systems } = userStore?.getUserInfo;
+  return systems[0].systemId;
+}
 
 export function getSearchColumns(): Partial<FormProps> {
   return {
@@ -7,15 +26,20 @@ export function getSearchColumns(): Partial<FormProps> {
     schemas: [
       {
         field: `systemId`,
-        label: `系统id`,
-        component: 'Input',
+        label: `系统`,
+        component: 'Select',
         colProps: {
           xl: 12,
           xxl: 6,
         },
         componentProps: {
-          placeholder: '请输入系统id',
+          placeholder: '请选择系统',
+          style: {
+            width: '100%',
+          },
+          options: getSystem(),
         },
+        defaultValue: getFirstSystemId(),
       },
       {
         field: `traceId`,
@@ -176,26 +200,56 @@ export function getSearchColumns(): Partial<FormProps> {
       {
         field: `startTimeFirst`,
         label: `请求开始时间起始`,
-        component: 'Input',
+        component: 'DatePicker',
         colProps: {
           xl: 12,
           xxl: 6,
         },
         componentProps: {
           placeholder: '请输入请求开始时间起始',
+          // 传给后端的时间格式--
+          valueFormat: 'YYYY-MM-DD HH:mm:ss',
+          // 显示的时间格式
+          showTime: {
+            format: 'YYYY-MM-DD HH:mm:ss',
+          },
+          // 设置不可选
+          disabledDate: (current) => {
+            // 不可选择未来时间
+            return current && current > Date.now();
+          },
+          style: {
+            width: '100%',
+          },
         },
+        defaultValue: moment().add(-7, 'd').format('YYYY-MM-DD HH:mm:ss'),
       },
       {
         field: `startTimeLast`,
         label: `请求开始时间终止`,
-        component: 'Input',
+        component: 'DatePicker',
         colProps: {
           xl: 12,
           xxl: 6,
         },
         componentProps: {
           placeholder: '请输入请求开始时间终止',
+          // 传给后端的时间格式--
+          valueFormat: 'YYYY-MM-DD HH:mm:ss',
+          // 显示的时间格式
+          showTime: {
+            format: 'YYYY-MM-DD HH:mm:ss',
+          },
+          // 设置不可选
+          disabledDate: (current) => {
+            // 不可选择未来时间
+            return current && current > Date.now();
+          },
+          style: {
+            width: '100%',
+          },
         },
+        defaultValue: moment().format('YYYY-MM-DD HH:mm:ss'),
       },
       {
         field: `endTimeFirst`,
